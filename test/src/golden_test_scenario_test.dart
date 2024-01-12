@@ -131,7 +131,7 @@ void main() {
       '.withTextScaleFactor sets correct default text scale factor',
       (tester) async {
         const textScaler = TextScaler.linear(2);
-        final subject = GoldenTestScenario.withTextScaleFactor(
+        final subject = GoldenTestScenario.withTextScaler(
           textScaler: textScaler,
           name: 'name',
           child: const Text('child'),

@@ -16,6 +16,8 @@ Future<void> testExecutable(FutureOr<void> Function() testMain) async {
       platformGoldensConfig:
           AlchemistConfig.current().platformGoldensConfig.copyWith(
                 enabled: enablePlatformTests,
+                renderShadows: true,
+                obscureText: true,
               ),
     ),
     run: testMain,

@@ -17,7 +17,7 @@ WidgetBuilder _build(Widget build) => (context) => build;
 /// * [GoldenTestGroup], which groups multiple [GoldenTestScenario]s together.
 /// * [GoldenTestScenario.builder], which creates a test scenario from a
 ///   [WidgetBuilder] that allows access to the [BuildContext] of the widget.
-/// * [GoldenTestScenario.withTextScaleFactor], which allows a default text
+/// * [GoldenTestScenario.withTextScaler], which allows a default text
 ///   scale factor to be applied to the child.
 /// {@endtemplate}
 class GoldenTestScenario extends StatelessWidget {
@@ -40,7 +40,7 @@ class GoldenTestScenario extends StatelessWidget {
 
   /// Creates a [GoldenTestScenario] with a custom [textScaler] that
   /// applies a default scale of text to its child.
-  GoldenTestScenario.withTextScaleFactor({
+  GoldenTestScenario.withTextScaler({
     required this.name,
     required TextScaler textScaler,
     required Widget child,
