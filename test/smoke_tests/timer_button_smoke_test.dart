@@ -12,7 +12,6 @@ class TimerButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      style: const ButtonStyle(elevation: MaterialStatePropertyAll(0)),
       onPressed: () {
         Timer(Duration.zero, () {});
       },

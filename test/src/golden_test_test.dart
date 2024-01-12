@@ -145,7 +145,7 @@ void main() {
         theme: alchemistTheme,
         ciGoldensConfig: CiGoldensConfig(
           theme: ciTheme,
-          // renderShadows: ciRenderShadows,
+          renderShadows: ciRenderShadows,
           filePathResolver: (fileName, environmentName) async {
             filePathResolverCalled = true;
             return 'myGoldenFile';

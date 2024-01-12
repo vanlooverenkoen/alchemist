@@ -299,11 +299,6 @@ class FlutterGoldenTestAdapter extends GoldenTestAdapter {
       renderObject.paintBounds,
     ).paintSingleChild(renderObject);
 
-    if (kDebugMode) {
-      print(renderObject.paintBounds.width);
-      print(renderObject.paintBounds.height);
-    }
-
     return layer.toImage(renderObject.paintBounds);
   }
 }

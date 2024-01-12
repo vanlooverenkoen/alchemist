@@ -11,13 +11,12 @@ Future<void> testExecutable(FutureOr<void> Function() testMain) async {
   return AlchemistConfig.runWithConfig(
     config: AlchemistConfig(
       theme: ThemeData(
+        useMaterial3: false,
         textTheme: const TextTheme().apply(fontFamily: 'Roboto'),
       ),
       platformGoldensConfig:
           AlchemistConfig.current().platformGoldensConfig.copyWith(
                 enabled: enablePlatformTests,
-                renderShadows: true,
-                obscureText: true,
               ),
     ),
     run: testMain,

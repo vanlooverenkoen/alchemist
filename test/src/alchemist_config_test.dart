@@ -350,8 +350,7 @@ void main() {
       test('for renderShadows', () {
         expect(
           defaultValue.renderShadows,
-          // isFalse,
-          isTrue,
+          isFalse,
         );
       });
 

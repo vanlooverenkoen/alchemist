@@ -475,8 +475,7 @@ class CiGoldensConfig extends GoldensConfig {
   const CiGoldensConfig({
     super.enabled = true,
     super.obscureText = true,
-    // super.renderShadows = false,
-    super.renderShadows = true,
+    super.renderShadows = false,
     super.filePathResolver,
     super.theme,
   });
