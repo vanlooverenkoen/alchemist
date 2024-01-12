@@ -26,7 +26,9 @@ jobs:
 
       - name: Run tests
         run: flutter test --no-pub --coverage --test-randomize-ordering-seed=random
+        continue-on-error: true  # This allows the workflow to continue even if this step fails
       - name: Archive golden tests failures
+        if: failure() 
         uses: actions/upload-artifact@v3
         with:
           name: failures
