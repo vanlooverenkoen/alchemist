@@ -117,11 +117,12 @@ class GoldenTestGroup extends StatelessWidget {
       child: Table(
         defaultColumnWidth: const IntrinsicColumnWidth(),
         columnWidths: columnWidths,
-        // border: TableBorder.symmetric(
-        // inside: BorderSide(
-        // color: Colors.black.withOpacity(0.3),
-        // ),
-        // ),
+        border: TableBorder.symmetric(
+          inside: BorderSide(
+            width: 2,
+            color: Colors.black.withOpacity(0.3),
+          ),
+        ),
         children: [
           for (int i = 0; i < _effectiveRows; i++)
             TableRow(
