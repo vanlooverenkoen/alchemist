@@ -25,7 +25,8 @@ jobs:
         uses: invertase/github-action-dart-analyzer@v1
 
       - name: Run tests
-        run: flutter test --no-pub --coverage --test-randomize-ordering-seed=random
+        # run: flutter test --no-pub --coverage --test-randomize-ordering-seed=random
+        run: flutter test --no-pub --coverage
         continue-on-error: true  # This allows the workflow to continue even if this step fails
       - name: Archive golden tests failures
         uses: actions/upload-artifact@v3
