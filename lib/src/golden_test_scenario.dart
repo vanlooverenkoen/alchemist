@@ -23,37 +23,35 @@ WidgetBuilder _build(Widget build) => (context) => build;
 class GoldenTestScenario extends StatelessWidget {
   /// {@macro golden_test_scenario}
   GoldenTestScenario({
-    Key? key,
     required this.name,
     required Widget child,
     this.constraints,
-  })  : builder = _build(child),
-        super(key: key);
+    super.key,
+  }) : builder = _build(child);
 
   /// Creates a [GoldenTestScenario] with a [builder] function that allows
   /// access to the [BuildContext] of the widget.
   const GoldenTestScenario.builder({
-    Key? key,
     required this.name,
     required this.builder,
     this.constraints,
-  }) : super(key: key);
+    super.key,
+  });
 
-  /// Creates a [GoldenTestScenario] with a custom [textScaleFactor] that
+  /// Creates a [GoldenTestScenario] with a custom [textScaler] that
   /// applies a default scale of text to its child.
   GoldenTestScenario.withTextScaleFactor({
-    Key? key,
     required this.name,
-    required double textScaleFactor,
+    required TextScaler textScaler,
     required Widget child,
     this.constraints,
-  })  : builder = _build(
+    super.key,
+  }) : builder = _build(
           _CustomTextScaleFactor(
-            textScaleFactor: textScaleFactor,
+            textScaler: textScaler,
             child: child,
           ),
-        ),
-        super(key: key);
+        );
 
   /// The name of the scenario.
   ///
@@ -101,27 +99,27 @@ class GoldenTestScenario extends StatelessWidget {
 }
 
 /// {@template _custom_text_scale_factor}
-/// An internal widget used to apply a default [textScaleFactor] to its [child].
+/// An internal widget used to apply a default [textScaler] to its [child].
 /// {@endtemplate}
 @protected
 class _CustomTextScaleFactor extends StatelessWidget {
   /// {@macro _custom_text_scale_factor}
   const _CustomTextScaleFactor({
-    required this.textScaleFactor,
+    required this.textScaler,
     required this.child,
   });
 
-  /// The default text scale factor to apply to the [child].
-  final double textScaleFactor;
+  /// The default text scaler to apply to the [child].
+  final TextScaler textScaler;
 
-  /// The child widget to apply the [textScaleFactor] to.
+  /// The child widget to apply the [textScaler] to.
   final Widget child;
 
   @override
   Widget build(BuildContext context) {
     return MediaQuery(
       data: MediaQuery.of(context).copyWith(
-        textScaleFactor: textScaleFactor,
+        textScaler: textScaler,
       ),
       child: child,
     );

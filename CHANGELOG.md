@@ -1,3 +1,6 @@
+# 0.8.0
+- fix: upgrade to flutter 3.16 (#104)
+
 # 0.7.0
 - fix: upgrade to flutter 3.13 (#95)
 - fix: render objects not rendering text (#98)

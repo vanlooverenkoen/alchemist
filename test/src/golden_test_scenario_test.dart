@@ -130,8 +130,9 @@ void main() {
     testWidgets(
       '.withTextScaleFactor sets correct default text scale factor',
       (tester) async {
+        const textScaler = TextScaler.linear(2);
         final subject = GoldenTestScenario.withTextScaleFactor(
-          textScaleFactor: 2,
+          textScaler: textScaler,
           name: 'name',
           child: const Text('child'),
         );
@@ -151,9 +152,9 @@ void main() {
         expect(
           mediaQuery,
           isA<MediaQueryData>().having(
-            (m) => m.textScaleFactor,
-            'textScaleFactor',
-            2.0,
+            (m) => m.textScaler,
+            'textScaler',
+            textScaler,
           ),
         );
       },
