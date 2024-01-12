@@ -14,6 +14,9 @@ void main() {
           GoldenTestScenario(
             name: 'scenario_button',
             child: ElevatedButton(
+              style: const ButtonStyle(
+                elevation: MaterialStatePropertyAll(0),
+              ),
               onPressed: () {},
               onLongPress: () {},
               child: const Text('button'),
