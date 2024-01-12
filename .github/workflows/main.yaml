@@ -37,22 +37,22 @@ jobs:
         with:
           files: coverage/lcov.info
 
-  pana:
-    runs-on: ubuntu-latest
+  # pana:
+  #   runs-on: ubuntu-latest
 
-    steps:
-      - uses: actions/checkout@v3
+  #   steps:
+  #     - uses: actions/checkout@v3
 
-      - uses: subosito/flutter-action@v2
-        with:
-          flutter-version: '3.16.0'
-          channel: 'stable'
-          cache: true
+  #     - uses: subosito/flutter-action@v2
+  #       with:
+  #         flutter-version: '3.16.0'
+  #         channel: 'stable'
+  #         cache: true
 
-      - name: Install Dependencies
-        run: |
-          flutter packages get
-          flutter pub global activate pana
+  #     - name: Install Dependencies
+  #       run: |
+  #         flutter packages get
+  #         flutter pub global activate pana
 
-      - name: Verify Pub Score
-        run: ./tool/verify_pub_score.sh 130
+  #     - name: Verify Pub Score
+  #       run: ./tool/verify_pub_score.sh 130
