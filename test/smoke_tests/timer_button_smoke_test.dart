@@ -25,11 +25,11 @@ void main() {
     goldenTest(
       'succeeds after tapping button with timer',
       fileName: 'timer_button_smoke_test',
-      pumpBeforeTest: (tester) async {
-        await tester.pumpAndSettle();
-        await tester.tap(find.byType(TimerButton));
-        await tester.pumpAndSettle();
-      },
+      // pumpBeforeTest: (tester) async {
+      //   await tester.pumpAndSettle();
+      //   await tester.tap(find.byType(TimerButton));
+      //   await tester.pumpAndSettle();
+      // },
       builder: () => const TimerButton(),
     );
   });

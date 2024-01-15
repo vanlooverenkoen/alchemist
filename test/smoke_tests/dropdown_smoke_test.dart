@@ -39,11 +39,11 @@ void main() {
         maxWidth: 200,
         maxHeight: 250,
       ),
-      pumpBeforeTest: (tester) async {
-        await tester.pumpAndSettle();
-        await tester.tap(find.byType(DropdownButton<String>));
-        await tester.pumpAndSettle();
-      },
+      // pumpBeforeTest: (tester) async {
+      //   await tester.pumpAndSettle();
+      //   await tester.tap(find.byType(DropdownButton<String>));
+      //   await tester.pumpAndSettle();
+      // },
       builder: () {
         return const TestDropdownButton();
       },

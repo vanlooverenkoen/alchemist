@@ -7,7 +7,9 @@ void main() {
     goldenTest(
       'succeeds with a BackButton widget',
       fileName: 'back_button_smoke_test',
-      builder: () => const BackButton(),
+      builder: () => BackButton(
+        onPressed: () {},
+      ),
     );
   });
 }
