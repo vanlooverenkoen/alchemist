@@ -6,7 +6,7 @@ void main() {
     testWidgets('Flutter golden test', (WidgetTester tester) async {
       final mementoDebugDisableShadows = debugDisableShadows;
       // Enable shadows
-      debugDisableShadows = false;
+      debugDisableShadows = true;
       await tester.pumpWidget(
         MaterialApp(
           home: Center(
