@@ -67,11 +67,13 @@ class AlchemistConfig extends Equatable {
   /// {@macro alchemist_config}
   const AlchemistConfig({
     bool? forceUpdateGoldenFiles,
+    GoldenTestTheme? goldenTestTheme,
     ThemeData? theme,
     PlatformGoldensConfig? platformGoldensConfig,
     CiGoldensConfig? ciGoldensConfig,
   })  : _forceUpdateGoldenFiles = forceUpdateGoldenFiles,
         _theme = theme,
+        _goldenTestTheme = goldenTestTheme,
         _platformGoldensConfig = platformGoldensConfig,
         _ciGoldensConfig = ciGoldensConfig;
 
@@ -181,6 +183,13 @@ class AlchemistConfig extends Equatable {
   ThemeData? get theme => _theme;
   final ThemeData? _theme;
 
+  /// The [GoldenTestTheme] to use when generating golden tests.
+  ///
+  /// If no [GoldenTestTheme] is provided, the default
+  /// [GoldenTestTheme.standard] will be used.
+  GoldenTestTheme? get goldenTestTheme => _goldenTestTheme;
+  final GoldenTestTheme? _goldenTestTheme;
+
   /// The configuration for human-readable golden tests running in non-CI
   /// environments.
   ///
@@ -202,12 +211,14 @@ class AlchemistConfig extends Equatable {
   AlchemistConfig copyWith({
     bool? forceUpdateGoldenFiles,
     ThemeData? theme,
+    GoldenTestTheme? goldenTestTheme,
     PlatformGoldensConfig? platformGoldensConfig,
     CiGoldensConfig? ciGoldensConfig,
   }) {
     return AlchemistConfig(
       forceUpdateGoldenFiles: forceUpdateGoldenFiles ?? _forceUpdateGoldenFiles,
       theme: theme ?? _theme,
+      goldenTestTheme: goldenTestTheme ?? _goldenTestTheme,
       platformGoldensConfig: platformGoldensConfig ?? _platformGoldensConfig,
       ciGoldensConfig: ciGoldensConfig ?? _ciGoldensConfig,
     );
@@ -224,6 +235,7 @@ class AlchemistConfig extends Equatable {
     return copyWith(
       forceUpdateGoldenFiles: other?._forceUpdateGoldenFiles,
       theme: other?._theme,
+      goldenTestTheme: other?._goldenTestTheme,
       platformGoldensConfig:
           platformGoldensConfig.merge(other?._platformGoldensConfig),
       ciGoldensConfig: ciGoldensConfig.merge(other?._ciGoldensConfig),
@@ -234,6 +246,7 @@ class AlchemistConfig extends Equatable {
   List<Object?> get props => [
         forceUpdateGoldenFiles,
         theme,
+        goldenTestTheme,
         platformGoldensConfig,
         ciGoldensConfig,
       ];
@@ -249,12 +262,12 @@ class AlchemistConfig extends Equatable {
 /// The [enabled] flag determines whether or not these golden tests are
 /// enabled. If set to `false`, these tests will not be generated or compared.
 /// Otherwise the tests will function as normal.
-/// {@endtemplate goldens_config_enabled}
+/// {@endtemplate}
 ///
 /// {@template goldens_config_file_path_resolver}
 /// The [filePathResolver] can be used to customize the name and of the golden
 /// file.
-/// {@endtemplate goldens_config_file_path_resolver}
+/// {@endtemplate}
 ///
 /// {@template goldens_config_theme}
 /// If a [theme] is provided, it will be assigned to the [MaterialApp] created
@@ -266,14 +279,14 @@ class AlchemistConfig extends Equatable {
 /// **Note:** when [obscureText] is true, tests are always rendered
 /// in the "Ahem" font family to ensure consistent results across platforms.
 /// In other words, the font family of the [theme] will be ignored.
-/// {@endtemplate goldens_config_theme}
+/// {@endtemplate}
 ///
 /// {@template goldens_config_render_shadows}
 /// The [renderShadows] flag determines whether or not shadows are rendered in
 /// golden tests.
 /// If set to `false`, all shadows are replaced with solid color blocks.
-/// {@endtemplate goldens_config_render_shadows}
-/// {@endtemplate goldens_config}
+/// {@endtemplate}
+/// {@endtemplate}
 abstract class GoldensConfig extends Equatable {
   /// {@macro goldens_config}
   const GoldensConfig({
@@ -399,26 +412,18 @@ abstract class GoldensConfig extends Equatable {
 /// By default, [renderShadows] is set to true so platform golden images are a
 /// more accurate representation of the tested widget.
 ///
-/// {@endtemplate platform_goldens_config}
+/// {@endtemplate}
 class PlatformGoldensConfig extends GoldensConfig {
   /// {@macro platform_goldens_config}
   const PlatformGoldensConfig({
     Set<HostPlatform>? platforms,
-    bool enabled = true,
-    bool obscureText = false,
-    bool renderShadows = true,
-    FilePathResolver? filePathResolver,
-    ThemeData? theme,
-    double tolerance = 0.0,
-  })  : _platforms = platforms,
-        super(
-          enabled: enabled,
-          obscureText: obscureText,
-          renderShadows: renderShadows,
-          filePathResolver: filePathResolver,
-          theme: theme,
-          tolerance: tolerance,
-        );
+    super.enabled = true,
+    super.obscureText = false,
+    super.renderShadows = true,
+    super.filePathResolver,
+    super.theme,
+    super.tolerance = 0.0,
+  }) : _platforms = platforms;
 
   @override
   String get environmentName => HostPlatform.current().operatingSystem;
@@ -499,24 +504,17 @@ class PlatformGoldensConfig extends GoldensConfig {
 /// {@macro goldens_config_render_shadows}
 /// By default, [renderShadows] is set to false to make CI tests more stable.
 ///
-/// {@endtemplate ci_goldens_config}
+/// {@endtemplate}
 class CiGoldensConfig extends GoldensConfig {
   /// {@macro ci_goldens_config}
   const CiGoldensConfig({
-    bool enabled = true,
-    bool obscureText = true,
-    bool renderShadows = false,
-    FilePathResolver? filePathResolver,
-    ThemeData? theme,
-    double tolerance = 0.0,
-  }) : super(
-          enabled: enabled,
-          obscureText: obscureText,
-          renderShadows: renderShadows,
-          filePathResolver: filePathResolver,
-          theme: theme,
-          tolerance: tolerance,
-        );
+    super.enabled = true,
+    super.obscureText = true,
+    super.renderShadows = false,
+    super.filePathResolver,
+    super.theme,
+    super.tolerance = 0.0,
+  });
 
   @override
   String get environmentName => 'CI';

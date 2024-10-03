@@ -23,37 +23,35 @@ WidgetBuilder _build(Widget build) => (context) => build;
 class GoldenTestScenario extends StatelessWidget {
   /// {@macro golden_test_scenario}
   GoldenTestScenario({
-    Key? key,
+    super.key,
     required this.name,
     required Widget child,
     this.constraints,
-  })  : builder = _build(child),
-        super(key: key);
+  }) : builder = _build(child);
 
   /// Creates a [GoldenTestScenario] with a [builder] function that allows
   /// access to the [BuildContext] of the widget.
   const GoldenTestScenario.builder({
-    Key? key,
+    super.key,
     required this.name,
     required this.builder,
     this.constraints,
-  }) : super(key: key);
+  });
 
   /// Creates a [GoldenTestScenario] with a custom [textScaleFactor] that
   /// applies a default scale of text to its child.
   GoldenTestScenario.withTextScaleFactor({
-    Key? key,
+    super.key,
     required this.name,
     required double textScaleFactor,
     required Widget child,
     this.constraints,
-  })  : builder = _build(
+  }) : builder = _build(
           _CustomTextScaleFactor(
             textScaleFactor: textScaleFactor,
             child: child,
           ),
-        ),
-        super(key: key);
+        );
 
   /// The name of the scenario.
   ///
@@ -72,30 +70,27 @@ class GoldenTestScenario extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            name,
-            style: const TextStyle(fontSize: 18),
-            textHeightBehavior: const TextHeightBehavior(
-              applyHeightToFirstAscent: false,
-            ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(
+          name,
+          style: const TextStyle(fontSize: 18),
+          textHeightBehavior: const TextHeightBehavior(
+            applyHeightToFirstAscent: false,
           ),
-          const SizedBox(height: 8),
-          ConstrainedBox(
-            constraints: constraints ??
-                GoldenTestScenarioConstraints.maybeOf(context) ??
-                const BoxConstraints(),
-            child: Builder(
-              builder: builder,
-            ),
+        ),
+        const SizedBox(height: 8),
+        ConstrainedBox(
+          constraints: constraints ??
+              GoldenTestScenarioConstraints.maybeOf(context) ??
+              const BoxConstraints(),
+          child: Builder(
+            builder: builder,
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
@@ -121,7 +116,7 @@ class _CustomTextScaleFactor extends StatelessWidget {
   Widget build(BuildContext context) {
     return MediaQuery(
       data: MediaQuery.of(context).copyWith(
-        textScaleFactor: textScaleFactor,
+        textScaler: TextScaler.linear(textScaleFactor),
       ),
       child: child,
     );

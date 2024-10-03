@@ -164,6 +164,7 @@ abstract class GoldenTestAdapter {
     required bool obscureFont,
     required ThemeData? globalConfigTheme,
     required ThemeData? variantConfigTheme,
+    required GoldenTestTheme? goldenTestTheme,
     required PumpAction pumpBeforeTest,
     required PumpWidget pumpWidget,
     required Widget widget,
@@ -227,12 +228,15 @@ class FlutterGoldenTestAdapter extends GoldenTestAdapter {
     required bool obscureFont,
     required ThemeData? globalConfigTheme,
     required ThemeData? variantConfigTheme,
+    required GoldenTestTheme? goldenTestTheme,
     required PumpAction pumpBeforeTest,
     required PumpWidget pumpWidget,
     required Widget widget,
   }) async {
     tester.view.devicePixelRatio = 1.0;
     tester.platformDispatcher.textScaleFactorTestValue = textScaleFactor;
+
+    goldenTestTheme ??= GoldenTestTheme.standard();
 
     await pumpWidget(
       tester,
@@ -241,6 +245,7 @@ class FlutterGoldenTestAdapter extends GoldenTestAdapter {
         obscureFont: obscureFont,
         globalConfigTheme: globalConfigTheme,
         variantConfigTheme: variantConfigTheme,
+        goldenTestTheme: goldenTestTheme,
         child: DefaultAssetBundle(
           bundle: TestAssetBundle(),
           child: Material(
@@ -250,7 +255,7 @@ class FlutterGoldenTestAdapter extends GoldenTestAdapter {
               child: Builder(
                 builder: (context) {
                   return ColoredBox(
-                    color: Theme.of(context).colorScheme.background,
+                    color: goldenTestTheme!.backgroundColor,
                     child: OverflowBox(
                       alignment: Alignment.topLeft,
                       minWidth: constraints.minWidth,
@@ -258,11 +263,8 @@ class FlutterGoldenTestAdapter extends GoldenTestAdapter {
                       maxWidth: constraints.maxWidth,
                       maxHeight: constraints.maxHeight,
                       child: Center(
-                        child: Padding(
-                          key: childKey,
-                          padding: const EdgeInsets.all(8),
-                          child: widget,
-                        ),
+                        key: childKey,
+                        child: widget,
                       ),
                     ),
                   );
@@ -317,12 +319,13 @@ class FlutterGoldenTestAdapter extends GoldenTestAdapter {
 class FlutterGoldenTestWrapper extends StatelessWidget {
   /// {@macro _flutter_golden_test_wrapper}
   const FlutterGoldenTestWrapper({
-    Key? key,
+    super.key,
     this.globalConfigTheme,
     this.variantConfigTheme,
+    this.goldenTestTheme,
     this.obscureFont = false,
     required this.child,
-  }) : super(key: key);
+  });
 
   /// The theme provided by the global [AlchemistConfig], if any.
   ///
@@ -333,6 +336,12 @@ class FlutterGoldenTestWrapper extends StatelessWidget {
   ///
   /// See [MaterialApp.theme] for more details.
   final ThemeData? variantConfigTheme;
+
+  /// The [GoldenTestTheme] to use when generating golden tests.
+  ///
+  /// If no [GoldenTestTheme] is provided, the default
+  /// [GoldenTestTheme.standard] will be used.
+  final GoldenTestTheme? goldenTestTheme;
 
   /// Whether the default font family of the resolved theme should be set to an
   /// obscured font.
@@ -375,6 +384,15 @@ class FlutterGoldenTestWrapper extends StatelessWidget {
 
     if (obscureFont) {
       resolvedTheme = resolvedTheme.applyObscuredFontFamily();
+    }
+
+    if (goldenTestTheme != null) {
+      resolvedTheme = resolvedTheme.copyWith(
+        extensions: [
+          ...resolvedTheme.extensions.values,
+          goldenTestTheme!,
+        ],
+      );
     }
 
     return resolvedTheme.stripTextPackages();
